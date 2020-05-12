@@ -5,14 +5,15 @@
 
 
 workspace "ReachOut"
-	architecture "x64"
+	architecture "x86"
+	startproject "sandbox"
 	
 	configurations
 	{
-		"Debug", "Release", "Dist"
+		"Debug", "Release"
 	}
 	
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 	
 	
 	
@@ -49,6 +50,25 @@ project "logger"
 		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/sandbox")
 	}
 	
+	filter { "system:window" }
+		cppdialect "C++17"
+		staticruntime "On"
+		systemversion "8.1"
+
+		
+	filter { "configurations:Debug" }
+		
+		defines { "DEBUG" }
+		symbols "On"
+			
+		
+	filter { "configurations:Release" }
+		
+		defines { "NDEBUG" }
+		optimize "On"
+		
+		
+		
 	
 	
 	
@@ -73,23 +93,23 @@ project "reachout"
 	{
 		"reachout/include",
 		"logger/include",
-		"3rdparty/freeglut/include"		
+		"3rdparty/sfml/include"		
 	}
 	
 	libdirs
     {
-		"3rdparty/freeglut/lib/x64"
+		"3rdparty/sfml/lib"
 	}
 	
 	links
 	{
-		"freeglut",
 		"logger"
 	}
-	
+		
 	defines
 	{
-		"RO_ENGINE"
+		"RO_ENGINE",
+		"SFML_DYNAMIC"
 	}
 	
 	postbuildcommands
@@ -97,18 +117,38 @@ project "reachout"
 		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/sandbox")
 	}
 	
-	filter "system:window"
+	filter { "system:window" }
 		cppdialect "C++17"
 		staticruntime "On"
 		systemversion "8.1"
+
 		
-		defines
-		{
-			"RO_ENGINE"
+		
+	filter { "configurations:Debug" }
+		
+		defines { "DEBUG" }
+		symbols "On"
+		
+		links
+		{			
+			"sfml-system-d",		
+			"sfml-graphics-d",
+			"sfml-window-d"
+		}	
+			
+		
+	filter { "configurations:Release" }
+		
+		defines { "NDEBUG" }
+		optimize "On"
+		
+		links
+		{			
+			"sfml-system",		
+			"sfml-graphics",
+			"sfml-window"
 		}
-
-
-
+	
 
 
 
@@ -138,16 +178,60 @@ project "sandbox"
 	
 	includedirs
 	{
-		"reachout/include"
+		"reachout/include",
+		"3rdparty/sfml/include"	
 	}	
+		
+	libdirs
+	{
+		"3rdparty/sfml/lib"
+	}
 	
 	links
 	{
 		"reachout"
-	}	
+	}			
 	
-	filter "system:window"
+	
+	postbuildcommands
+	{
+		("{COPY} ../3rdparty/sfml/bin ../bin/" .. outputdir .. "/sandbox")
+	}
+
+	
+	
+	filter { "system:window" }
 		cppdialect "C++17"
 		staticruntime "On"
 		systemversion "8.1"
 		
+		
+	filter { "configurations:Debug" }
+		
+		defines { "DEBUG" }
+		symbols "On"
+		
+		links
+		{			
+			"sfml-system-d",		
+			"sfml-graphics-d",
+			"sfml-window-d"
+		}	
+			
+		
+	filter { "configurations:Release" }
+		
+		defines { "NDEBUG" }
+		optimize "On"
+		
+		links
+		{			
+			"sfml-system",		
+			"sfml-graphics",
+			"sfml-window"
+		}
+		
+	
+
+
+
