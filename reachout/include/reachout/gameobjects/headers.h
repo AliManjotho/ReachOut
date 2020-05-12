@@ -1,0 +1,6 @@
+#ifndef REACHOUT_GAMEOBJECTS_HEADERS_H
+#define REACHOUT_GAMEOBJECTS_HEADERS_H
+
+#include "gameobjects\gameobject.h"
+
+#endif //REACHOUT_GAMEOBJECTS_HEADERS_H

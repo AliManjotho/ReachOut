@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LOGGER_LOG_H
+#define LOGGER_LOG_H
 
 #include <string>
 #include "logger\core.h"
@@ -27,4 +28,5 @@ namespace logger
 	};
 }
 
+#endif //LOGGER_LOG_H
 

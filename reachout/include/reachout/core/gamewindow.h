@@ -1,33 +1,21 @@
-#pragma once
+#ifndef REACHOUT_CORE_GAMEWINDOW_H
+#define REACHOUT_CORE_GAMEWINDOW_H
 
 #include <string>
 #include <vector>
 #include "reachout\core\core.h"
 #include "SFML\Window.hpp"
+#include "SFML\Graphics.hpp"
 
 namespace ro
 {
-	class RO_API GameWindow
+	class RO_API GameWindow : public sf::RenderWindow
 	{
-	private:
-		int id;
-		int width;
-		int height;
-		std::string title;
-		sf::Window* sfmlWindow;
-
-	private:
-		static int idCounter;
-
 	public:
 		GameWindow(int width, int height, const std::string& title);
-
-		int getId();
-		const std::string& getTitle();
-		std::vector<int> getResolution();
-		void setTitle(const std::string& title);
-		void setResolution(int width, int height);
 
 		void show();
 	};
 }
+
+#endif //REACHOUT_CORE_GAMEWINDOW_H
