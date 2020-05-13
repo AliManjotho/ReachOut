@@ -1,5 +1,5 @@
 #include "reachout\gameobjects\player.h"
-#include <iostream>
+#include "spdlog\spdlog.h"
 
 namespace ro
 {
@@ -7,12 +7,14 @@ namespace ro
 	{
 		if (this->texture.loadFromFile("..\\resources\\textures\\character_sprite.png", sf::IntRect(0, 0, 160, 318)))
 		{
+			spdlog::info("Loading texture successfull for player.");
+
 			this->texture.setSmooth(true);
 			setTexture(this->texture);
 			this->setScale(sf::Vector2f(0.3, 0.3));
 		}
 		else
-			std::cout << "ERROR loading texture" << std::endl;
+			spdlog::error("Loading texture failed for player.");
 	}
 
 

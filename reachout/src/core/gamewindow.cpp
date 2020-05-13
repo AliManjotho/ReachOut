@@ -1,13 +1,13 @@
 #include "reachout\core\gamewindow.h"
 #include "reachout\gameobjects\player.h"
-#include "logger\logger.h"
+#include "spdlog\spdlog.h"
 
 namespace ro
-{
+{	
 	GameWindow::GameWindow(int width, int height, const std::string& title) :
 		sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::Default, sf::ContextSettings(0U, 0U, 8, 1U, 1U, 0U, false))
 	{
-		EngineLogger->info("Game window created.");
+		spdlog::info("Game window created.");
 	}
 	
 
@@ -17,10 +17,9 @@ namespace ro
 	void GameWindow::show()
 	{
 		this->setActive(false);
-		EngineLogger->warn("Game window deactivated.");
+		spdlog::warn("Game window deactivated.");
 
-
-		EngineLogger->info("Entering Game Loop.");
+		spdlog::info("Entering Game Loop.");
 
 		while (this->isOpen())
 		{
@@ -36,11 +35,9 @@ namespace ro
 
 
 			this->clear(sf::Color::Black);
-			
+								
 
-			Player player;
-
-			this->draw(player);
+			this->draw(this->player);
 
 
 			this->display();

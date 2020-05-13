@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "reachout\core\core.h"
+#include "reachout\gameobjects\player.h"
 #include "SFML\Window.hpp"
 #include "SFML\Graphics.hpp"
 
@@ -11,6 +12,9 @@ namespace ro
 {
 	class RO_API GameWindow : public sf::RenderWindow
 	{
+	private:
+		Player player;
+
 	public:
 		GameWindow(int width, int height, const std::string& title);
 

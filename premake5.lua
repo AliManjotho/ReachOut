@@ -20,58 +20,7 @@ workspace "ReachOut"
 	
 	
 	
-	
-project "logger"
-	location "logger"
-	kind "SharedLib"
-	language "C++"
-	
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-	
-	files
-	{
-		"logger/include/logger/**.h",
-		"logger/src/**.cpp"
-	}
-	
-	includedirs
-	{
-		"logger/include"	
-	}
-		
-	defines
-	{
-		"LOGGER"
-	}
-	
-	postbuildcommands
-	{
-		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/sandbox")
-	}
-	
-	filter { "system:window" }
-		cppdialect "C++17"
-		staticruntime "On"
-		systemversion "8.1"
 
-		
-	filter { "configurations:Debug" }
-		
-		defines { "DEBUG" }
-		symbols "On"
-			
-		
-	filter { "configurations:Release" }
-		
-		defines { "NDEBUG" }
-		optimize "On"
-		
-		
-		
-	
-	
-	
 	
 	
 	
@@ -92,7 +41,7 @@ project "reachout"
 	includedirs
 	{
 		"reachout/include",
-		"logger/include",
+		"3rdparty/spdlog/include",
 		"3rdparty/sfml/include"		
 	}
 	
@@ -100,11 +49,7 @@ project "reachout"
     {
 		"3rdparty/sfml/lib"
 	}
-	
-	links
-	{
-		"logger"
-	}
+		
 		
 	defines
 	{
@@ -179,7 +124,8 @@ project "sandbox"
 	includedirs
 	{
 		"reachout/include",
-		"3rdparty/sfml/include"	
+		"3rdparty/spdlog/include",
+		"3rdparty/sfml/include"		
 	}	
 		
 	libdirs
